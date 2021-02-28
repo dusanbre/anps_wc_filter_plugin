@@ -6,11 +6,11 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 		// Base ID of your widget
-			'wpb_widget',
+			'Anps_WC_Ajax_Filter_Widget',
 			// Widget name will appear in UI
-			__( 'WPBeginner Widget', 'wpb_widget_domain' ),
+			__( 'Anpstheme WC Ajax Filter', 'anps_wc_filter' ),
 			// Widget description
-			array( 'description' => __( 'Sample widget based on WPBeginner Tutorial', 'wpb_widget_domain' ) )
+			array( 'description' => __( 'Widget for filtering products', 'anps_wc_filter' ) )
 		);
 	}
 
@@ -26,7 +26,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		}
 
 		// This is where you run the code and display the output
-		echo __( 'Hello, World!', 'wpb_widget_domain' );
+		echo __( 'Hello, World!', 'anps_wc_filter' );
 		echo $args['after_widget'];
 	}
 
@@ -35,7 +35,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		if ( isset( $instance['title'] ) ) {
 			$title = $instance['title'];
 		} else {
-			$title = __( 'New title', 'wpb_widget_domain' );
+			$title = __( 'New title', 'anps_wc_filter' );
 		}
 		// Widget admin form
 		?>
