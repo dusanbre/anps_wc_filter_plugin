@@ -14,13 +14,10 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		// Creating widget front-end
 	public function widget( $args, $instance ) {
 		$title = apply_filters( 'widget_title', $instance['title'] );
-
-		echo $args['before_widget'];
-		if ( ! empty( $title ) ) {
-			echo $args['before_title'] . $title . $args['after_title'];
-		}
-		echo __( 'Hello, World!', 'anps_wc_filter' );
-		echo $args['after_widget'];
+		?>
+		<div class="ducota">Alo bre</div>
+		
+		<?php
 	}
 
 		// Widget Backend
