@@ -16,7 +16,34 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		?>
-		<div class="ducota">Alo bre</div>
+		<section class="widget">
+
+			<div class="widget__filter">
+				<h3 class="widget__filter-heading">Filter</h3>
+			</div>
+
+			<div class="widget__category">
+				<h1 class="widget__category-heading" onclick='toggle()'>Category</h1>
+				<div class="widget__category-group-1" id='visible'>
+					<ul>
+						<li><label><input type="checkbox">Category-1 </label><span>1</span></li>
+						<li><label><input type="checkbox">Category-2</label><span>5</span></li>
+						<li><label><input type="checkbox">Category-3</label><span>1</span></li>
+						<li><label><input type="checkbox">Category-4</label><span>3</span></li>
+						<li><label><input type="checkbox">Category-5</label><span>2</span></li>
+					</ul>
+				</div>
+				<div class="widget__category-group-2">
+					<ul>
+						<li><label>Category<input type="checkbox"></label></li>
+						<li><label>Category<input type="checkbox"></label></li>
+					</ul>
+				</div>
+			</div>
+
+		</section>
+
+		
 		
 		<?php
 	}
