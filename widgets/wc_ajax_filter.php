@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit;
 // Creating the widget
 class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 
@@ -22,25 +23,42 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 
 		// Widget Backend
 	public function form( $instance ) {
-		$title       = isset( $instance['title'] ) ? $instance['title'] : '';
+		$title              = isset( $instance['title'] ) ? $instance['title'] : '';
+		$anps_wc_filter_cat = isset( $instance['instance_chechbox_array']['anps_wc_filter_cat'] ) ? $instance['instance_chechbox_array']['anps_wc_filter_cat'] : '';
+
 		$all_attr    = wc_get_attribute_taxonomies();
 		$all_cat     = get_terms( 'product_cat' );
 		$price_range = $this->helper_get_price_range();
-		echo '<pre>';
-		print_r( $price_range );
+
+		$min_price = floor( $price_range->min_price / 10 ) * 10;
+		$max_price = ceil( $price_range->max_price / 10 ) * 10;
+		// echo '<pre>';
+		print_r( $instance['instance_chechbox_array']['anps_wc_filter_cat'] );
 		// Widget admin form
 		?>
 		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Widget Title:' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+		</p>
+		<p>
+		<label for="<?php echo $this->get_field_id( 'anps_wc_filter_cat' ); ?>"><?php echo esc_html__( 'Filter By Category:', 'anps_wc_filter' ); ?></label>
+		<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_cat' ); ?>" id="<?php echo $this->get_field_id( 'anps_wc_filter_cat' ); ?>" value="1" <?php echo $anps_wc_filter_cat == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
+		</p>
+		<p>
+		<p>sadsa</p>
 		</p>
 		<?php
 	}
 
 		// Updating widget replacing old instances with new
 	public function update( $new_instance, $old_instance ) {
-		$instance          = array();
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance_chechbox_array                       = array();
+		$instance_chechbox_array['anps_wc_filter_cat'] = ( ! empty( $new_instance['anps_wc_filter_cat'] ) ) ? $new_instance['anps_wc_filter_cat'] : '';
+		// $instance_chechbox_array['anps_wc_filter_attr'] = ( ! empty( $new_instance['anps_wc_filter_attr'] ) ) ? $new_instance['anps_wc_filter_attr'] : '';
+
+		$instance                            = array();
+		$instance['title']                   = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['instance_chechbox_array'] = ( ! empty( $instance_chechbox_array ) ) ? $instance_chechbox_array : '';
 		return $instance;
 	}
 

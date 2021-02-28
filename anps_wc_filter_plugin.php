@@ -8,9 +8,7 @@ Author: Anpsthemes
 Text Domain: anps_wc_filter
 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 require_once 'widgets/wc_ajax_filter.php';
 
