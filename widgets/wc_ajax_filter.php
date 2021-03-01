@@ -14,7 +14,18 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 
 		// Creating widget front-end
 	public function widget( $args, $instance ) {
-		$title = apply_filters( 'widget_title', $instance['title'] );
+		$title                 = isset( $instance['title'] ) ? $instance['title'] : '';
+		$anps_wc_filter_cat    = isset( $instance['anps_wc_filter_cat'] ) ? $instance['anps_wc_filter_cat'] : '';
+		$anps_wc_filter_attr   = isset( $instance['anps_wc_filter_attr'] ) ? $instance['anps_wc_filter_attr'] : '';
+		$anps_wc_filter_onsale = isset( $instance['anps_wc_filter_onsale'] ) ? $instance['anps_wc_filter_onsale'] : '';
+		$anps_wc_filter_price  = isset( $instance['anps_wc_filter_price'] ) ? $instance['anps_wc_filter_price'] : '';
+
+		$all_attr    = wc_get_attribute_taxonomies();
+		$all_cat     = get_terms( 'product_cat' );
+		$price_range = $this->helper_get_price_range();
+
+		$min_price = floor( $price_range->min_price / 10 ) * 10;
+		$max_price = ceil( $price_range->max_price / 10 ) * 10;
 		?>
 		<section class="widget">
 
@@ -50,17 +61,12 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 
 		// Widget Backend
 	public function form( $instance ) {
-		$title              = isset( $instance['title'] ) ? $instance['title'] : '';
-		$anps_wc_filter_cat = isset( $instance['instance_chechbox_array']['anps_wc_filter_cat'] ) ? $instance['instance_chechbox_array']['anps_wc_filter_cat'] : '';
+		$title                 = isset( $instance['title'] ) ? $instance['title'] : '';
+		$anps_wc_filter_cat    = isset( $instance['anps_wc_filter_cat'] ) ? $instance['anps_wc_filter_cat'] : '';
+		$anps_wc_filter_attr   = isset( $instance['anps_wc_filter_attr'] ) ? $instance['anps_wc_filter_attr'] : '';
+		$anps_wc_filter_onsale = isset( $instance['anps_wc_filter_onsale'] ) ? $instance['anps_wc_filter_onsale'] : '';
+		$anps_wc_filter_price  = isset( $instance['anps_wc_filter_price'] ) ? $instance['anps_wc_filter_price'] : '';
 
-		$all_attr    = wc_get_attribute_taxonomies();
-		$all_cat     = get_terms( 'product_cat' );
-		$price_range = $this->helper_get_price_range();
-
-		$min_price = floor( $price_range->min_price / 10 ) * 10;
-		$max_price = ceil( $price_range->max_price / 10 ) * 10;
-		// echo '<pre>';
-		print_r( $instance['instance_chechbox_array']['anps_wc_filter_cat'] );
 		// Widget admin form
 		?>
 		<p>
@@ -72,20 +78,28 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_cat' ); ?>" id="<?php echo $this->get_field_id( 'anps_wc_filter_cat' ); ?>" value="1" <?php echo $anps_wc_filter_cat == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
 		</p>
 		<p>
-		<p>sadsa</p>
+		<label for="<?php echo $this->get_field_id( 'anps_wc_filter_attr' ); ?>"><?php echo esc_html__( 'Filter By Attributes:', 'anps_wc_filter' ); ?></label>
+		<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_attr' ); ?>" id="<?php echo $this->get_field_id( 'anps_wc_filter_attr' ); ?>" value="1" <?php echo $anps_wc_filter_attr == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
+		</p>
+		<p>
+		<label for="<?php echo $this->get_field_id( 'anps_wc_filter_onsale' ); ?>"><?php echo esc_html__( 'Filter Product Onsale:', 'anps_wc_filter' ); ?></label>
+		<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_onsale' ); ?>" id="<?php echo $this->get_field_id( 'anps_wc_filter_onsale' ); ?>" value="1" <?php echo $anps_wc_filter_onsale == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
+		</p>
+		<p>
+		<label for="<?php echo $this->get_field_id( 'anps_wc_filter_price' ); ?>"><?php echo esc_html__( 'Filter By Price:', 'anps_wc_filter' ); ?></label>
+		<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_price' ); ?>" id="<?php echo $this->get_field_id( 'anps_wc_filter_price' ); ?>" value="1" <?php echo $anps_wc_filter_price == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
 		</p>
 		<?php
 	}
 
 		// Updating widget replacing old instances with new
 	public function update( $new_instance, $old_instance ) {
-		$instance_chechbox_array                       = array();
-		$instance_chechbox_array['anps_wc_filter_cat'] = ( ! empty( $new_instance['anps_wc_filter_cat'] ) ) ? $new_instance['anps_wc_filter_cat'] : '';
-		// $instance_chechbox_array['anps_wc_filter_attr'] = ( ! empty( $new_instance['anps_wc_filter_attr'] ) ) ? $new_instance['anps_wc_filter_attr'] : '';
-
-		$instance                            = array();
-		$instance['title']                   = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['instance_chechbox_array'] = ( ! empty( $instance_chechbox_array ) ) ? $instance_chechbox_array : '';
+		$instance                          = array();
+		$instance['title']                 = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['anps_wc_filter_cat']    = ( ! empty( $new_instance['anps_wc_filter_cat'] ) ) ? strip_tags( $new_instance['anps_wc_filter_cat'] ) : '';
+		$instance['anps_wc_filter_attr']   = ( ! empty( $new_instance['anps_wc_filter_attr'] ) ) ? strip_tags( $new_instance['anps_wc_filter_attr'] ) : '';
+		$instance['anps_wc_filter_onsale'] = ( ! empty( $new_instance['anps_wc_filter_onsale'] ) ) ? strip_tags( $new_instance['anps_wc_filter_onsale'] ) : '';
+		$instance['anps_wc_filter_price']  = ( ! empty( $new_instance['anps_wc_filter_price'] ) ) ? strip_tags( $new_instance['anps_wc_filter_price'] ) : '';
 		return $instance;
 	}
 
