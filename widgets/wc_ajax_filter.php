@@ -27,35 +27,141 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		$min_price = floor( $price_range->min_price / 10 ) * 10;
 		$max_price = ceil( $price_range->max_price / 10 ) * 10;
 		?>
-		<section class="widget">
 
-			<div class="widget__filter">
-				<h3 class="widget__filter-heading">Filter</h3>
-			</div>
 
-			<div class="widget__category">
-				<h1 class="widget__category-heading" onclick='toggle()'>Category</h1>
-				<div class="widget__category-group-1" id='visible'>
-					<ul>
-						<li><label><input type="checkbox">Category-1 </label><span>1</span></li>
-						<li><label><input type="checkbox">Category-2</label><span>5</span></li>
-						<li><label><input type="checkbox">Category-3</label><span>1</span></li>
-						<li><label><input type="checkbox">Category-4</label><span>3</span></li>
-						<li><label><input type="checkbox">Category-5</label><span>2</span></li>
-					</ul>
-				</div>
-				<div class="widget__category-group-2">
-					<ul>
-						<li><label>Category<input type="checkbox"></label></li>
-						<li><label>Category<input type="checkbox"></label></li>
-					</ul>
-				</div>
-			</div>
+ <section class="sidebar-widget">
+      <div class="sidebar-widget__filter">
+        <h3 class="sidebar-widget__filter-heading">Filter</h3>
+      </div>
 
-		</section>
+      <div class="sidebar-widget__category">
+        <h1 class="sidebar-widget__category-heading" onclick="toggleCat()">
+          Category
+        </h1>
+        <div class="sidebar-widget__category-group-1" id="visible-cat">
+          <ul>
+            <li>
+              <label><input type="checkbox" />Category-1 </label><span>1</span>
+            </li>
+            <li>
+              <label><input type="checkbox" />Category-2</label><span>5</span>
+            </li>
+            <li>
+              <label><input type="checkbox" />Category-3</label><span>1</span>
+            </li>
+            <li>
+              <label><input type="checkbox" />Category-4</label><span>3</span>
+            </li>
+            <li>
+              <label><input type="checkbox" />Category-5</label><span>2</span>
+            </li>
+          </ul>
+        </div>
 
-		
-		
+        <div class="sidebar-widget__category-group-2">
+          <ul>
+            <li>
+              <label>Best buy<input type="checkbox" /></label>
+            </li>
+            <li>
+              <label>Price<input type="checkbox" /></label>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+	  <div class="sidebar-widget__price">
+        <div class="multi-range-slider">
+          <input type="range" id="input-left" min="0" max="600" value="0" />
+          <input type="range" id="input-right" min="0" max="600" value="600" />
+
+          <div class="sidebar-widget__price-slider">
+            <div class="sidebar-widget__price-slider-track"></div>
+            <div class="sidebar-widget__price-slider-range"></div>
+            <div class="sidebar-widget__price-slider-thumb left"></div>
+            <div class="sidebar-widget__price-slider-thumb right"></div>
+          </div>
+
+          <div class="value">
+            <span class="value-left"></span>
+            <span class="value-right"></span>
+          </div>
+        </div>
+      </div>
+
+	  <div class="sidebar-widget__color">
+      <h1 class="sidebar-widget__color-heading" onclick="toggleColor()">
+        Color
+      </h1>
+
+      <div class="sidebar-widget__color-group-1" id="visible-color">
+        <ul>
+          <li>
+            <label
+              ><input type="checkbox" value="green" class="color_inp" /><span
+                class="green color"
+              ></span
+              >Green</label
+            ><span class="num">2</span>
+          </li>
+          <li>
+            <label
+              ><input type="checkbox" value="blue" class="color_inp" /><span
+                class="blue color"
+              ></span
+              >Blue</label
+            ><span class="num">2</span>
+          </li>
+
+          <li>
+            <label
+              ><input type="checkbox" value="red" class="color_inp" /><span
+                class="red color"
+              ></span
+              >Red</label
+            ><span class="num">2</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar-widget__size">
+      <h1 class="sidebar-widget__size-heading" onclick="toggleSize()">Size</h1>
+
+      <div class="sidebar-widget__size-group-1" id="visible-size">
+        <ul>
+          <li>
+            <label
+              ><input type="checkbox" value="m" /><span class="size">M</span
+              ></label
+            ><span class="num">2</span>
+          </li>
+          <li>
+            <label
+              ><input type="checkbox" value="s" /><span class="size">S</span
+              ></label
+            ><span class="num">2</span>
+          </li>
+
+          <li>
+            <label
+              ><input type="checkbox" value="XL" /><span class="size">XL</span
+              ></label
+            ><span class="num">2</span>
+          </li>
+          <li>
+            <label
+              ><input type="checkbox" value="XXL" /><span class="size">XXL</span
+              ></label
+            ><span class="num">2</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <button class="filter-btn">Filter</button>
+    </section>
+
 		<?php
 	}
 

@@ -22,6 +22,7 @@ html {
     }
   }
 
+  // CATEGORY CLASS
   &__category {
     font-family: Montserrat;
     padding-right: 2rem;
@@ -52,15 +53,12 @@ html {
         li {
           display: flex;
           justify-content: space-between;
-
           color: black;
 
           label {
             font-size: 1.4rem;
             font-weight: 500;
-
             font-family: inherit;
-
             display: flex;
             align-items: center;
 
@@ -86,9 +84,7 @@ html {
             font-size: 1.6rem;
             font-weight: 600;
             width: 100%;
-
             margin: 0;
-
             font-family: inherit;
 
             input {
@@ -99,21 +95,240 @@ html {
       }
     }
   }
-  &__price {
-    h1 {
-      font-size: 1.6rem;
-      font-weight: 600;
 
-      margin: 0;
-      padding-bottom: 10px;
+  // PRICE CLASS
+  &__price {
+    position: relative;
+
+    &-slider {
+      position: relative;
+      z-index: 1;
+      height: 1rem;
+      margin: 0 1.5rem;
+
+      &-track {
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 5px;
+        background-color: transparent;
+      }
+
+      &-range {
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 5px;
+        background-color: #000000;
+
+        height: 0.2rem;
+      }
+
+      &-thumb {
+        position: absolute;
+        z-index: 3;
+        width: 0.6rem;
+        height: 0.6rem;
+        background-color: #000000;
+        border-radius: 50%;
+        transition: box-shadow 0.3s ease-in-out;
+      }
+
+      &-thumb.left {
+        left: 0;
+        transform: translate(-1px, -2px);
+      }
+      &-thumb.right {
+        right: 0;
+        transform: translate(5px, -2px);
+      }
+    }
+  }
+
+  // COLOR CLASS
+  &__color {
+    font-family: Montserrat;
+    padding-right: 2rem;
+    &-heading {
+      color: #000;
+      font-size: 1.6rem;
+      font-family: Montserrat;
+      font-weight: 600;
       border-bottom: 1px solid #acacac;
+      padding-bottom: 1rem;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &::after {
+        content: "\f078";
+        font-family: FontAwesome;
+        font-size: 1.2rem;
+      }
+    }
+
+    &-group-1 {
+      ul {
+        list-style: none;
+        color: black;
+
+        padding: 2.3rem 0 2.3rem 2rem;
+        li {
+          display: flex;
+          justify-content: space-between;
+
+          label {
+            position: relative;
+            cursor: pointer;
+
+            padding-left: 2.5rem;
+
+            font-size: 1.4rem;
+            font-weight: 500;
+            font-family: inherit;
+
+            input:checked ~ .color {
+              outline: 1px solid rgb(0, 0, 0);
+              outline-offset: 1px;
+            }
+
+            span {
+              font-size: 1.4rem;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // SIZE CLASS
+  &__size {
+    font-family: Montserrat;
+    padding-right: 2rem;
+    &-heading {
+      color: #000;
+      font-size: 1.6rem;
+      font-family: Montserrat;
+      font-weight: 600;
+      border-bottom: 1px solid #acacac;
+      padding-bottom: 1rem;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &::after {
+        content: "\f078";
+        font-family: FontAwesome;
+        font-size: 1.2rem;
+      }
+    }
+
+    &-group-1 {
+      ul {
+        list-style: none;
+        color: black;
+
+        padding: 2.3rem 0 2.3rem 2rem;
+        li {
+          display: flex;
+          justify-content: space-between;
+
+          label {
+            font-size: 1.4rem;
+            font-weight: 500;
+            font-family: inherit;
+
+            .size,
+            .num {
+              font-size: 1.4rem;
+              font-weight: 500;
+            }
+
+            input {
+              cursor: pointer;
+              margin-right: 1rem;
+            }
+          }
+        }
+      }
     }
   }
 }
 
+input[type="range"] {
+  position: absolute;
+  pointer-events: none;
+  -webkit-appearance: none;
+  z-index: 2;
+  height: 1rem;
+  width: 100%;
+  opacity: 0;
+}
+input[type="range"]::-webkit-slider-thumb {
+  pointer-events: all;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0;
+  border: 0 none;
+  background-color: red;
+  -webkit-appearance: none;
+}
+
+//TOGGLE CLASS
 .hidden {
-  transition: all 1s;
+  max-height: 0;
   padding: 0;
   transform: scaleY(0);
   transform-origin: top;
+  transition: all 4s;
+}
+
+// COLOR CLASS
+.color_inp {
+  margin: 0;
+  cursor: pointer;
+  visibility: hidden;
+}
+.color {
+  position: absolute;
+  width: 1.2rem;
+  height: 1.2rem;
+  left: 0;
+  top: 2px;
+}
+.green {
+  background-color: green;
+}
+.blue {
+  background-color: rgb(0, 47, 255);
+}
+.red {
+  background-color: red;
+}
+// ---
+
+// FILTER BUTTON
+.filter-btn {
+  color: #000;
+  background-color: transparent;
+  font-family: Montserrat;
+  font-size: 1.6rem;
+  font-weight: 500;
+
+  outline: none;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 0.5rem 3rem;
+  cursor: pointer;
 }
