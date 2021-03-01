@@ -3,6 +3,6 @@
 })(jQuery);
 
 function toggle() {
-  var element = document.getElementById("visible");
+  const element = document.getElementById("visible");
   element.classList.toggle("hidden");
 }

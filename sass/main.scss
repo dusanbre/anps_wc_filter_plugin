@@ -14,7 +14,7 @@ html {
   box-sizing: border-box;
 }
 
-.widget {
+.sidebar-widget {
   &__filter {
     &-heading {
       padding-bottom: 1.5rem;
@@ -24,6 +24,7 @@ html {
 
   &__category {
     font-family: Montserrat;
+    padding-right: 2rem;
 
     &-heading {
       font-size: 1.6rem;
@@ -32,10 +33,12 @@ html {
 
       display: flex;
       justify-content: space-between;
+      align-items: center;
 
       &::after {
         content: "\f078";
         font-family: FontAwesome;
+        font-size: 1.2rem;
       }
     }
 
@@ -55,7 +58,6 @@ html {
           label {
             font-size: 1.4rem;
             font-weight: 500;
-            width: 100%;
 
             font-family: inherit;
 
@@ -97,10 +99,20 @@ html {
       }
     }
   }
+  &__price {
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+
+      margin: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #acacac;
+    }
+  }
 }
 
 .hidden {
-  transition: all 3s;
+  transition: all 1s;
   padding: 0;
   transform: scaleY(0);
   transform-origin: top;
