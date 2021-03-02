@@ -40,9 +40,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         </h1>
         <div class="sidebar-widget__category-group-1" id="visible-cat">
             <ul>
-                <?php
-				foreach ( $all_cat as $cat ) :
-					?>
+                <?php foreach ( $all_cat as $cat ) : ?>
                 <li>
                     <label><input type="checkbox"
                             value="<?php echo esc_attr( $cat->slug ); ?>" /><?php echo esc_html__( $cat->name, 'anps_wc_filter' ); ?>
