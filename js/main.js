@@ -1,38 +1,41 @@
+// category-toggle-class
 function toggleCat() {
   const cat = document.getElementById("visible-cat");
   cat.classList.toggle("hidden");
 }
 
+// color-toggle-class
 function toggleColor() {
   const color = document.getElementById("visible-color");
   color.classList.toggle("hidden");
 }
 
+// size-toggle-class
 function toggleSize() {
   const size = document.getElementById("visible-size");
   size.classList.toggle("hidden");
 }
 
-var inputLeft = document.getElementById("input-left");
-var inputRight = document.getElementById("input-right");
+const inputLeft = document.getElementById("input-left");
+const inputRight = document.getElementById("input-right");
 
-var thumbLeft = document.querySelector(
+const thumbLeft = document.querySelector(
   ".sidebar-widget__price-slider-thumb.left"
 );
-var thumbRight = document.querySelector(
+const thumbRight = document.querySelector(
   ".sidebar-widget__price-slider-thumb.right"
 );
-var range = document.querySelector(".sidebar-widget__price-slider-range");
+const range = document.querySelector(".sidebar-widget__price-slider-range");
 
 const valLeft = document.querySelector(".value-left");
 const valRight = document.querySelector(".value-right");
 
 function setLeftValue() {
-  const minimum = inputLeft.min;
+  const min = inputLeft.min;
   const max = inputLeft.max;
 
   inputLeft.value = Math.min(inputLeft.value, inputRight.value - 1);
-  var percent = ((inputLeft.value - minimum) / (max - minimum)) * 100;
+  const percent = ((inputLeft.value - min) / (max - min)) * 100;
 
   thumbLeft.style.left = percent + "%";
   range.style.left = percent + "%";
@@ -47,7 +50,7 @@ function setRightValue() {
   const max = inputRight.max;
 
   inputRight.value = Math.max(inputRight.value, inputLeft.value + 1);
-  var percent = ((inputRight.value - min) / (max - min)) * 100;
+  const percent = ((inputRight.value - min) / (max - min)) * 100;
 
   thumbRight.style.right = 100 - percent + "%";
   range.style.right = 100 - percent + "%";
