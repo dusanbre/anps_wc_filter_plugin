@@ -29,6 +29,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		?>
 
 
+<!-- provera -->
 <section class="sidebar-widget">
     <div class="sidebar-widget__filter">
         <h3 class="sidebar-widget__filter-heading"><?php echo esc_html__( 'Filter', 'anps_wc_filter' ); ?></h3>
