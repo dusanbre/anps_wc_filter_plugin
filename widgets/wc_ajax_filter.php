@@ -36,7 +36,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
     </div>
 
     <div class="sidebar-widget__category">
-        <h1 class="sidebar-widget__category-heading" onclick="toggleCat()">
+        <h1 class="sidebar-widget__category-heading">
             <?php echo esc_html__( 'Category', 'anps_wc_filter' ); ?>
         </h1>
         <div class="sidebar-widget__category-group-1" id="visible-cat">
@@ -84,7 +84,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
     </div>
 
     <div class="sidebar-widget__menu">
-        <h1 class="sidebar-widget__menu-heading" onclick="toggleColor()">
+        <h1 class="sidebar-widget__menu-heading">
             Color
         </h1>
 
@@ -107,7 +107,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
     </div>
 
     <div class="sidebar-widget__menu">
-        <h1 class="sidebar-widget__menu-heading" onclick="toggleSize()">Size</h1>
+        <h1 class="sidebar-widget__menu-heading">Size</h1>
 
         <div class="sidebar-widget__menu-group-1" id="visible-size">
             <ul>

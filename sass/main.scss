@@ -173,6 +173,10 @@ html {
     }
 
     &-group-1 {
+      transform: scale(1);
+      transform-origin: top;
+      transition: all .3s;
+      max-height: 200px;
       ul {
         list-style: none;
         color: black;
@@ -229,12 +233,12 @@ html {
   }
 
   //TOGGLE CLASS
-  .hidden {
+  .hidden-sbv {
     max-height: 0;
     padding: 0;
     transform: scaleY(0);
     transform-origin: top;
-    transition: all 4s;
+    transition: all .3s;
   }
 
   // VALUE OF PRICE
