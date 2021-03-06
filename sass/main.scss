@@ -14,7 +14,7 @@ html {
   box-sizing: border-box;
 }
 
-.sidebar-widget {
+.sbw_sidebar-widget {
   &__filter {
     &-heading {
       padding-bottom: 1.5rem;
@@ -44,6 +44,11 @@ html {
     }
 
     &-group-1 {
+      transform: scale(1);
+      transform-origin: top;
+      transition: all 0.3s;
+      max-height: 200px;
+
       padding: 2.3rem 0 2rem 2.3rem;
       ul {
         list-style: none;
@@ -175,7 +180,7 @@ html {
     &-group-1 {
       transform: scale(1);
       transform-origin: top;
-      transition: all .3s;
+      transition: all 0.3s;
       max-height: 200px;
       ul {
         list-style: none;
@@ -233,12 +238,12 @@ html {
   }
 
   //TOGGLE CLASS
-  .hidden-sbv {
+  .sbw-hidden {
     max-height: 0;
     padding: 0;
     transform: scaleY(0);
     transform-origin: top;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 
   // VALUE OF PRICE
@@ -280,7 +285,7 @@ html {
   // ---
 
   // FILTER BUTTON
-  .filter-btn {
+  .sbw_filter-btn {
     color: #000;
     background-color: transparent;
     font-family: Montserrat;

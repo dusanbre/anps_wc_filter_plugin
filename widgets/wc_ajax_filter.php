@@ -30,16 +30,16 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 
 
 <!-- provera -->
-<section class="sidebar-widget">
-    <div class="sidebar-widget__filter">
-        <h3 class="sidebar-widget__filter-heading"><?php echo esc_html__( 'Filter', 'anps_wc_filter' ); ?></h3>
+<section class="sbw_sidebar-widget">
+    <div class="sbw_sidebar-widget__filter">
+        <h3 class="sbw_sidebar-widget__filter-heading"><?php echo esc_html__( 'Filter', 'anps_wc_filter' ); ?></h3>
     </div>
 
-    <div class="sidebar-widget__category">
-        <h1 class="sidebar-widget__category-heading">
+    <div class="sbw_sidebar-widget__category">
+        <h1 class="sbw_sidebar-widget__category-heading">
             <?php echo esc_html__( 'Category', 'anps_wc_filter' ); ?>
         </h1>
-        <div class="sidebar-widget__category-group-1" id="visible-cat">
+        <div class="sbw_sidebar-widget__category-group-1">
             <ul>
                 <?php foreach ( $all_cat as $cat ) : ?>
                 <li>
@@ -51,7 +51,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
             </ul>
         </div>
 
-        <div class="sidebar-widget__category-group-2">
+        <div class="sbw_sidebar-widget__category-group-2">
             <ul>
                 <li>
                     <label><?php echo esc_html__( 'Onsale', 'anps_wc_filter' ); ?><input type="checkbox"
@@ -64,16 +64,16 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         </div>
     </div>
 
-    <div class="sidebar-widget__price">
-        <div class="multi-range-slider">
-            <input type="range" id="input-left" min="0" max="600" value="0" />
-            <input type="range" id="input-right" min="0" max="600" value="600" />
+    <div class="sbw_sidebar-widget__price">
+        <div class="stw-multi-range-slider">
+            <input type="range" id="sbw_input-left" min="0" max="600" value="0" />
+            <input type="range" id="sbw_input-right" min="0" max="600" value="600" />
 
-            <div class="sidebar-widget__price-slider">
-                <div class="sidebar-widget__price-slider-track"></div>
-                <div class="sidebar-widget__price-slider-range"></div>
-                <div class="sidebar-widget__price-slider-thumb left"></div>
-                <div class="sidebar-widget__price-slider-thumb right"></div>
+            <div class="sbw_sidebar-widget__price-slider">
+                <div class="sbw_sidebar-widget__price-slider-track"></div>
+                <div class="sbw_sidebar-widget__price-slider-range"></div>
+                <div class="sbw_sidebar-widget__price-slider-thumb left"></div>
+                <div class="sbw_sidebar-widget__price-slider-thumb right"></div>
             </div>
 
             <div class="value">
@@ -83,12 +83,12 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         </div>
     </div>
 
-    <div class="sidebar-widget__menu">
-        <h1 class="sidebar-widget__menu-heading">
+    <div class="sbw_sidebar-widget__menu">
+        <h1 class="sbw_sidebar-widget__menu-heading">
             Color
         </h1>
 
-        <div class="sidebar-widget__menu-group-1" id="visible-color">
+        <div class="sbw_sidebar-widget__menu-group-1">
             <ul>
                 <li>
                     <label><input type="checkbox" value="green" class="color_inp" /><span
@@ -106,10 +106,10 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         </div>
     </div>
 
-    <div class="sidebar-widget__menu">
-        <h1 class="sidebar-widget__menu-heading">Size</h1>
+    <div class="sbw_sidebar-widget__menu">
+        <h1 class="sbw_sidebar-widget__menu-heading">Size</h1>
 
-        <div class="sidebar-widget__menu-group-1" id="visible-size">
+        <div class="sbw_sidebar-widget__menu-group-1">
             <ul>
                 <li>
                     <label><input type="checkbox" value="m" /><span>M</span></label><span class="num">2</span>
@@ -127,7 +127,8 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         </div>
     </div>
 
-    <button class="filter-btn">Filter</button>
+    <button class="sbw_filter-btn">Filter</button>
+    
 </section>
 
 <?php

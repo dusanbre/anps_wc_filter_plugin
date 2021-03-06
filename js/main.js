@@ -1,31 +1,14 @@
-// category-toggle-class
-// function toggleCat() {
-//   const cat = document.getElementById("visible-cat");
-//   cat.classList.toggle("hidden");
-// }
-
-// // color-toggle-class
-// function toggleColor() {
-//   const color = document.getElementById("visible-color");
-//   color.classList.toggle("hidden");
-// }
-
-// // size-toggle-class
-// function toggleSize() {
-//   const size = document.getElementById("visible-size");
-//   size.classList.toggle("hidden");
-// }
-
-// const inputLeft = document.getElementById("input-left");
+const inputLeft = document.getElementById("sbw_input-left");
+console.log(inputLeft);
 // const inputRight = document.getElementById("input-right");
 
 // const thumbLeft = document.querySelector(
-//   ".sidebar-widget__price-slider-thumb.left"
+//   ".sbw_sidebar-widget__price-slider-thumb.left"
 // );
 // const thumbRight = document.querySelector(
-//   ".sidebar-widget__price-slider-thumb.right"
+//   ".sbw_sidebar-widget__price-slider-thumb.right"
 // );
-// const range = document.querySelector(".sidebar-widget__price-slider-range");
+// const range = document.querySelector(".sbw_sidebar-widget__price-slider-range");
 
 // const valLeft = document.querySelector(".value-left");
 // const valRight = document.querySelector(".value-right");
@@ -65,12 +48,12 @@
 
 jQuery(function ($) {
   $(document).ready(function () {
-    $('.sidebar-widget__menu-heading').click(function () {
-      $(this).next().toggleClass('hidden-sbv')
+    $(".sbw_sidebar-widget__menu-heading").click(function () {
+      $(this).next().toggleClass("sbw-hidden");
+    });
 
-    })
+    $(".sbw_sidebar-widget__category-heading").click(function () {
+      $(this).next().toggleClass("sbw-hidden");
+    });
   });
-})
-
-
-
+});
