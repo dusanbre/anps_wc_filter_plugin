@@ -65,6 +65,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
     </div>
 
     <div class="sbw_sidebar-widget__price">
+    <h3>Price</h3>
         <div class="stw-multi-range-slider">
             <input type="range" id="sbw_input-left" min="0" max="600" value="0" />
             <input type="range" id="sbw_input-right" min="0" max="600" value="600" />
@@ -75,6 +76,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
                 <div class="sbw_sidebar-widget__price-slider-thumb left"></div>
                 <div class="sbw_sidebar-widget__price-slider-thumb right"></div>
             </div>
+            
 
             <div class="value">
                 <span class="value-left"></span>
@@ -130,6 +132,57 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
     <button class="sbw_filter-btn">Filter</button>
     
 </section>
+
+<script type="text/javascript">
+ window.onload = function() {
+
+const inputLeft = document.getElementById("sbw_input-left");
+const inputRight = document.getElementById("sbw_input-right");
+
+const thumbLeft = document.querySelector(".sbw_sidebar-widget__price-slider-thumb.left");
+const thumbRight = document.querySelector(".sbw_sidebar-widget__price-slider-thumb.right");
+
+const range = document.querySelector(".sbw_sidebar-widget__price-slider-range");
+
+const valLeft = document.querySelector(".value-left");
+const valRight = document.querySelector(".value-right");
+
+function setLeftValue() {
+  let min = inputLeft.min;
+  let max = inputLeft.max;
+
+  inputLeft.value = Math.min(inputLeft.value, inputRight.value - 1);
+
+  const percent = ((inputLeft.value - min) / (max - min)) * 100;
+
+  thumbLeft.style.left = percent + "%";
+  range.style.left = percent + "%";
+
+  const value = inputLeft.value + `€`;
+  valLeft.innerHTML = value;
+}
+setLeftValue();
+
+function setRightValue() {
+  let min = inputRight.min;
+  let max = inputRight.max;
+
+  inputRight.value = Math.max(inputRight.value, inputLeft.value + 1);
+
+  const percent = ((inputRight.value - min) / (max - min)) * 100;
+
+  thumbRight.style.right = 100 - percent + "%";
+  range.style.right = 100 - percent + "%";
+
+  const value = inputRight.value + "€";
+  valRight.innerHTML = value;
+}
+setRightValue();
+
+inputLeft.addEventListener("input", setLeftValue);
+inputRight.addEventListener("input", setRightValue);
+ }
+</script>
 
 <?php
 	}
