@@ -13,7 +13,11 @@ defined( 'ABSPATH' ) || exit;
 require_once 'widgets/wc_ajax_filter.php';
 
 function anps_enqueue_plugin_assets_front() {
+
+	wp_enqueue_script( 'anps-jq-slider', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-slider.min.js', array( 'jquery' ), true );
 	wp_enqueue_script( 'anps-widget-plugin-frontend', plugin_dir_url( __FILE__ ) . 'js/main.js', array( 'jquery' ), true );
+
+	wp_enqueue_style( 'anps-jq-slide-style', plugin_dir_url( __FILE__ ) . 'css/jquery-ui-slider.min.css', array(), '1.12.1', false );
 	wp_enqueue_style( 'anps-widget-style-frontend', plugin_dir_url( __FILE__ ) . 'css/main.css', array(), '1.0', false );
 }
 
@@ -27,4 +31,3 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 } else {
 	echo 'WooCommerce is not Active.';
 }
-
