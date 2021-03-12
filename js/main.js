@@ -14,6 +14,7 @@ jQuery(function ($) {
 
     $("#anps-price-range-slider").slider({
       range: true,
+      step: 10,
       min: parseInt(minPrice),
       max: parseInt(maxPrice),
       values: [parseInt(minPrice), parseInt(maxPrice)],
@@ -24,8 +25,8 @@ jQuery(function ($) {
         $("#amount_max").replaceWith(
           `<input id='amount_max' type='text' value='${ui.values[1]}' style="display:none;"/>`
         );
-        $(".value-left").text(`${ui.values[0]}`);
-        $(".value-right").text(`${ui.values[1]}`);
+        $(".value-left").text(`Min: ${ui.values[0]}`);
+        $(".value-right").text(`Max: ${ui.values[1]}`);
       },
     });
   });

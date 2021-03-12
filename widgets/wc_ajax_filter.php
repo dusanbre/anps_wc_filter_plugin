@@ -20,12 +20,13 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		$anps_wc_filter_onsale = isset( $instance['anps_wc_filter_onsale'] ) ? $instance['anps_wc_filter_onsale'] : '';
 		$anps_wc_filter_price  = isset( $instance['anps_wc_filter_price'] ) ? $instance['anps_wc_filter_price'] : '';
 
-		$all_attr    = wc_get_attribute_taxonomies();
-		$all_cat     = get_terms( 'product_cat' );
-		$price_range = $this->helper_get_price_range();
+		$get_all_attr = wc_get_attribute_taxonomies();
+		$all_cat      = get_terms( 'product_cat' );
+		$price_range  = $this->helper_get_price_range();
 
 		$min_price = floor( $price_range->min_price / 10 ) * 10;
 		$max_price = ceil( $price_range->max_price / 10 ) * 10;
+
 		?>
 
 
@@ -36,7 +37,8 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         <h3 class="sbw_sidebar-widget__filter-heading"><?php echo esc_html__( 'Filter', 'anps_wc_filter' ); ?></h3>
     </div>
 
-    <div class="sbw_sidebar-widget__category">
+    <div class="sbw_sidebar-widget__category"
+        style="<?php echo $anps_wc_filter_cat ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
         <h1 class="sbw_sidebar-widget__category-heading">
             <?php echo esc_html__( 'Category', 'anps_wc_filter' ); ?>
         </h1>
@@ -51,21 +53,21 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
                 <?php endforeach; ?>
             </ul>
         </div>
-
-        <div class="sbw_sidebar-widget__category-group-2">
+        <div class="sbw_sidebar-widget__category-group-2"
+            style="<?php echo $anps_wc_filter_onsale ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
             <ul>
+                <?php if ( wc_get_product_ids_on_sale() ) : ?>
                 <li>
                     <label><?php echo esc_html__( 'Onsale', 'anps_wc_filter' ); ?><input type="checkbox"
                             value="onsale" /></label>
                 </li>
-                <li>
-                    <label>Price<input type="checkbox" /></label>
-                </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
 
-    <div class="sbw_sidebar-widget__price">
+    <div class="sbw_sidebar-widget__price"
+        style="<?php echo $anps_wc_filter_price ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
         <h3>Price</h3>
         <div class="stw-multi-range-slider">
             <p id="range-values">
@@ -75,58 +77,54 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
             <!-- Slider element || empty div -->
             <div class="sbw_sidebar-widget__price-slider" id="anps-price-range-slider"></div>
             <div class="value">
-                <span class="value-left"><?php echo $min_price; ?></span>
-                <span class="value-right"><?php echo $max_price; ?></span>
+                <span class="value-left">Min: <?php echo $min_price; ?></span>
+                <span class="value-right">Max: <?php echo $max_price; ?></span>
             </div>
         </div>
     </div>
 
-    <div class="sbw_sidebar-widget__menu">
+    <?php foreach ( $get_all_attr as $attr ) : ?>
+    <?php
+			$attr_variations                          = array();
+			$attr_variations[ $attr->attribute_name ] = get_terms( 'pa_' . $attr->attribute_name );
+			?>
+    <div class="sbw_sidebar-widget__menu"
+        style="<?php echo $anps_wc_filter_attr ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
         <h1 class="sbw_sidebar-widget__menu-heading">
             Color
         </h1>
 
         <div class="sbw_sidebar-widget__menu-group-1">
             <ul>
+                <?php foreach ( $attr_variations as $key => $item ) : ?>
+
+                <?php if ( $key == 'color' ) : ?>
+                <?php
+						foreach ( $item as $c ) :
+							$item_color = get_term_meta( $c->term_id, 'anps_hex_color_attr', true );
+							?>
                 <li>
-                    <label><input type="checkbox" value="green" class="color_inp" /><span
-                            class="green color"></span>Green</label><span class="num">2</span>
+                    <label><input type="checkbox" value="<?php echo esc_attr( $c->slug ); ?>" class="color_inp" /><span
+                            class="color"
+                            style="background-color:<?php echo esc_attr( $item_color ); ?>"></span><?php echo esc_html__( $c->name, 'anps_wc_filter' ); ?></label><span
+                        class="num"><?php echo $c->count; ?></span>
                 </li>
+                <?php endforeach; ?>
+                <?php else : ?>
+                <?php foreach ( $item as $o ) : ?>
                 <li>
-                    <label><input type="checkbox" value="blue" class="color_inp" /><span
-                            class="blue color"></span>Blue</label><span class="num">2</span>
+                    <label><input type="checkbox"
+                            value="<?php echo esc_attr( $o->slug ); ?>" /><span><?php echo esc_html__( $o->name, 'anps_wc_filter' ); ?></span></label><span
+                        class="num"><?php echo $o->count; ?></span>
                 </li>
-                <li>
-                    <label><input type="checkbox" value="red" class="color_inp" /><span
-                            class="red color"></span>Red</label><span class="num">2</span>
-                </li>
+                <?php endforeach; ?>
+                <?php endif; ?>
+                <?php endforeach; ?>
             </ul>
         </div>
     </div>
-
-    <div class="sbw_sidebar-widget__menu">
-        <h1 class="sbw_sidebar-widget__menu-heading">Size</h1>
-
-        <div class="sbw_sidebar-widget__menu-group-1">
-            <ul>
-                <li>
-                    <label><input type="checkbox" value="m" /><span>M</span></label><span class="num">2</span>
-                </li>
-                <li>
-                    <label><input type="checkbox" value="s" /><span>S</span></label><span class="num">2</span>
-                </li>
-                <li>
-                    <label><input type="checkbox" value="XL" /><span>XL</span></label><span class="num">2</span>
-                </li>
-                <li>
-                    <label><input type="checkbox" value="XXL" /><span>XXL</span></label><span class="num">2</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-
+    <?php endforeach; ?>
     <button class="sbw_filter-btn">Filter</button>
-    <input type="submit" value="Filter" />
 </section>
 
 <?php

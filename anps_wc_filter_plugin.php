@@ -11,6 +11,7 @@ Text Domain: anps_wc_filter
 defined( 'ABSPATH' ) || exit;
 
 require_once 'widgets/wc_ajax_filter.php';
+require_once 'inc/meta_box.php';
 
 function anps_enqueue_plugin_assets_front() {
 
@@ -26,6 +27,10 @@ function anps_init_widget_plugin() {
 }
 
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	add_action( 'pa_color_add_form_fields', 'anps_color_add_term_fields' );
+	add_action( 'pa_color_edit_form_fields', 'anps_color_edit_term_fields', 10, 2 );
+	add_action( 'created_pa_color', 'anps_color_save_term_fields' );
+	add_action( 'edited_pa_color', 'anps_color_save_term_fields' );
 	add_action( 'widgets_init', 'anps_init_widget_plugin' );
 	add_action( 'wp_enqueue_scripts', 'anps_enqueue_plugin_assets_front' );
 } else {

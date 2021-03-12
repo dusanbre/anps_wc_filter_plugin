@@ -190,19 +190,6 @@ html {
     transition: all 0.3s;
   }
 
-  // VALUE OF PRICE
-  .value {
-    text-align: center;
-  }
-  .value-left,
-  .value-right {
-    padding: 4px 10px;
-    background: #efefef;
-    font-size: 14px;
-    color: #000;
-    font-weight: bold;
-  }
-
   // COLOR CLASS
   .color_inp {
     margin: 0;
@@ -241,5 +228,43 @@ html {
     border-radius: 3px;
     padding: 0.5rem 3rem;
     cursor: pointer;
+  }
+}
+
+#anps-price-range-slider {
+  height: 2px;
+  .ui-slider-range {
+    height: 2px;
+    background-color: #f68c6e;
+  }
+  .ui-slider-handle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #f68c6e;
+    border: 1px solid #f68c6e;
+    &.ui-state-focus {
+      outline: 1px solid transparent;
+    }
+  }
+}
+
+.stw-multi-range-slider {
+  .value {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-right: 20px;
+    span {
+      width: 50%;
+      font-size: 14px;
+      font-weight: 600;
+      color: black;
+      border: 1px solid #f68c6e;
+      border-radius: 5px;
+      padding: 5px 0;
+      text-align: center;
+    }
   }
 }
