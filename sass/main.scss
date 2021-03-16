@@ -49,14 +49,17 @@ html {
       transition: all 0.3s;
       max-height: 200px;
 
-      padding: 2.3rem 0 2rem 2.3rem;
+      // padding: 2.3rem 0 2rem 2.3rem;
       ul {
         list-style: none;
-
+        padding: 2.3rem 0 2rem 2rem;
         li {
           display: flex;
           justify-content: space-between;
           color: black;
+          &.child {
+            padding-left: 20px;
+          }
 
           label {
             font-size: 1.4rem;
@@ -66,7 +69,7 @@ html {
             align-items: center;
 
             input {
-              margin: 0 1rem;
+              margin: 0 1rem 0 0;
             }
           }
           span {

@@ -21,7 +21,13 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		$anps_wc_filter_price  = isset( $instance['anps_wc_filter_price'] ) ? $instance['anps_wc_filter_price'] : '';
 
 		$get_all_attr = wc_get_attribute_taxonomies();
-		$all_cat      = get_terms( 'product_cat' );
+		$all_cat      = get_terms(
+			'product_cat',
+			array(
+				'order'      => 'ASC',
+				'hide_empty' => true,
+			)
+		);
 		$price_range  = $this->helper_get_price_range();
 
 		$min_price = floor( $price_range->min_price / 10 ) * 10;
@@ -45,11 +51,31 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         <div class="sbw_sidebar-widget__category-group-1">
             <ul>
                 <?php foreach ( $all_cat as $cat ) : ?>
+                <?php
+					if ( $cat->parent == 0 ) :
+						?>
                 <li>
-                    <label><input type="checkbox"
+                    <label><input type="checkbox" id="<?php echo esc_attr( $cat->taxonomy ); ?>"
                             value="<?php echo esc_attr( $cat->slug ); ?>" /><?php echo esc_html__( $cat->name, 'anps_wc_filter' ); ?>
                     </label><span><?php echo esc_html__( $cat->count, 'anps_wc_filter' ); ?></span>
                 </li>
+                <?php
+						$sub = get_terms(
+							'product_cat',
+							array(
+								'hide_empty' => true,
+								'parent'     => $cat->term_id,
+							)
+						);
+						foreach ( $sub as $sc ) :
+							?>
+                <li class="<?php echo esc_attr( 'child' ); ?>">
+                    <label><input type="checkbox" id="<?php echo esc_attr( $sc->taxonomy ); ?>"
+                            value="<?php echo esc_attr( $sc->slug ); ?>" /><?php echo esc_html__( $sc->name, 'anps_wc_filter' ); ?>
+                    </label><span><?php echo esc_html__( $sc->count, 'anps_wc_filter' ); ?></span>
+                </li>
+                <?php endforeach; ?>
+                <?php endif; ?>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -58,7 +84,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
             <ul>
                 <?php if ( wc_get_product_ids_on_sale() ) : ?>
                 <li>
-                    <label><?php echo esc_html__( 'Onsale', 'anps_wc_filter' ); ?><input type="checkbox"
+                    <label><?php echo esc_html__( 'Onsale', 'anps_wc_filter' ); ?><input type="checkbox" id="on_sale"
                             value="onsale" /></label>
                 </li>
                 <?php endif; ?>
@@ -103,17 +129,17 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 						foreach ( $item as $c ) :
 							$item_color = get_term_meta( $c->term_id, 'anps_hex_color_attr', true );
 							?>
-                <li>
-                    <label><input type="checkbox" value="<?php echo esc_attr( $c->slug ); ?>" class="color_inp" /><span
-                            class="color"
+                <li data-attr="<?php echo esc_attr( $key ); ?>">
+                    <label><input type="checkbox" id="<?php echo esc_attr( $key ); ?>"
+                            value="<?php echo esc_attr( $c->slug ); ?>" class="color_inp" /><span class="color"
                             style="background-color:<?php echo esc_attr( $item_color ); ?>"></span><?php echo esc_html__( $c->name, 'anps_wc_filter' ); ?></label><span
                         class="num"><?php echo $c->count; ?></span>
                 </li>
                 <?php endforeach; ?>
                 <?php else : ?>
                 <?php foreach ( $item as $o ) : ?>
-                <li>
-                    <label><input type="checkbox"
+                <li data-attr="<?php echo esc_attr( $key ); ?>">
+                    <label><input type="checkbox" id="<?php echo esc_attr( $key ); ?>"
                             value="<?php echo esc_attr( $o->slug ); ?>" /><span><?php echo esc_html__( $o->name, 'anps_wc_filter' ); ?></span></label><span
                         class="num"><?php echo $o->count; ?></span>
                 </li>
