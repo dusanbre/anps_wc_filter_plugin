@@ -27,6 +27,10 @@ jQuery(function ($) {
         );
         $(".value-left").text(`Min: ${ui.values[0]}`);
         $(".value-right").text(`Max: ${ui.values[1]}`);
+
+      },
+      stop: function (event, ui) {
+        sendAjaxRequest()
       },
     });
     const widget = $('.sbw_sidebar-widget');
@@ -46,9 +50,14 @@ jQuery(function ($) {
     const inputCategory = $('.sbw_sidebar-widget__category .sbw_sidebar-widget__category-group-1').find('input');
     const inputOnSale = $('.sbw_sidebar-widget__category .sbw_sidebar-widget__category-group-2').find('input');
     const inputAttr = $('.sbw_sidebar-widget__menu').find('input');
+    const inputMaxPrice = $('.sbw_sidebar-widget__price').find('#amount_max').val()
+    const inputMinPrice = $('.sbw_sidebar-widget__price').find('#amount_min').val()
+
     let attrArreyToSend = []
     let catArrayToSend = []
     let onSaleArrayToSend = []
+
+    console.log(catArrayToSend)
 
     inputAttr.map(function () {
       if ($(this).is(':checked')) {
@@ -78,15 +87,46 @@ jQuery(function ($) {
         action: 'anps_filter_products_ajax',
         categories: catArrayToSend,
         attributes: attrArreyToSend,
-        onsale: onSaleArrayToSend
+        onsale: onSaleArrayToSend,
+        minPrice: inputMinPrice,
+        maxPrice: inputMaxPrice
       },
 
     }).done(function (response, textStatus, XMLHttpResponse) {
-      console.log(XMLHttpResponse)
-      console.log(response)
-      console.log(textStatus)
+      if (textStatus === 'success') {
+        const html = response[0];
+        const urlDataSetup = response[1];
+        $('.products').empty()
+        $('.products').append(html)
+
+        doneUrlSetup(urlDataSetup)
+
+      }
     })
 
+  }
+
+  function doneUrlSetup(urlData) {
+    const output = urlData.attributes.reduce(function (o, cur) {
+      let occurs = o.reduce(function (n, item, i) {
+        return (item.type === cur.type) ? i : n;
+      }, -1);
+      if (occurs >= 0) {
+        o[occurs].value = o[occurs].value.concat(cur.value);
+      } else {
+        let obj = {
+          type: cur.type,
+          value: [cur.value]
+        };
+        o = o.concat([obj]);
+      }
+      return o;
+    }, []);
+    console.log(output)
+
+    const newurl = `${window.location.protocol}//${window.location.host + window.location.pathname}?${urlData.categories ? 'product_cat=' + urlData.categories.join(',') : ''}${urlData.minPrice !== '' ? '&min_price=' + urlData.minPrice : ''}${urlData.maxPrice !== '' ? '&max_price=' + urlData.maxPrice : ''}`;
+    console.log(newurl)
+    window.history.pushState({ path: newurl }, '', newurl);
   }
 
 });

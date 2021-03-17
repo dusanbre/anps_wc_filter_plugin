@@ -49,33 +49,79 @@ add_action( 'wp_ajax_anps_filter_products_ajax', 'anps_filter_products_ajax_reci
 
 function anps_filter_products_ajax_recive() {
 
+	// get values
 	$categories = isset( $_POST['categories'] ) ? $_POST['categories'] : '';
 	$attributes = isset( $_POST['attributes'] ) ? $_POST['attributes'] : '';
 	$onsale     = isset( $_POST['onsale'] ) ? $_POST['onsale'] : '';
+	$min_price  = isset( $_POST['minPrice'] ) ? $_POST['minPrice'] : '';
+	$max_price  = isset( $_POST['maxPrice'] ) ? $_POST['maxPrice'] : '';
+
+	header( 'Content-Type: application/json' );
+	// init query parametars
+	$tax_query  = array( 'relation' => 'OR' );
+	$meta_query = array( 'relation' => 'AND' );
+	// set category tax
+	if ( ! empty( $categories ) ) {
+		foreach ( $categories as $category ) {
+			$tax_query[] = array(
+				'taxonomy' => 'product_cat',
+				'field'    => 'slug',
+				'terms'    => $category,
+			);
+		}
+	}
+	// set attributes tax
+	if ( ! empty( $attributes ) ) {
+		foreach ( $attributes as $attr ) {
+			$tax_query[] = array(
+				'taxonomy' => 'pa_' . $attr['type'],
+				'field'    => 'slug',
+				'terms'    => $attr['value'],
+				'operator' => 'IN',
+			);
+		}
+	}
+	// set price meta query
+	if ( isset( $min_price ) && isset( $max_price ) ) {
+		$meta_query[] = array(
+			'key'     => '_price',
+			'value'   => array( $min_price, $max_price ),
+			'compare' => 'BETWEEN',
+			'type'    => 'NUMERIC',
+		);
+	}
 
 	$args = array(
 		'post_type'      => 'product',
 		'posts_per_page' => -1,
+		'order'          => 'ASC',
+		'orderby'        => 'date',
+		'tax_query'      => $tax_query,
+		'meta_query'     => $meta_query,
 	);
 
 	$prod = new WP_Query( $args );
 
-	$result   = array();
-	$response = '';
+	if ( $prod->have_posts() ) {
+		$results_html = '';
+		ob_start();
+		while ( $prod->have_posts() ) {
+			$prod->the_post();
+			echo wc_get_template_part( 'content', 'product' );
+		}
+		wp_reset_postdata();
+		$results_html = ob_get_clean();
+	} else {
+		$results_html = '';
+		ob_start();
+		echo '<div>Products not found!</div>';
+		$results_html = ob_get_clean();
+	}
 
-	// if ( $prod->have_posts() ) {
-	// while ( $prod->have_posts() ) {
+	$return_arr = array( $results_html );
+	array_push( $return_arr, $_POST );
 
-	// $prod->the_post();
-	// $result[] = array(
-	// 'id' => wc_get_template_part( 'content', 'product' ),
-	// );
-	// $response .= wc_get_template_part( 'content', 'product' );
-	// }
-	// wp_reset_postdata();
-	// }
-
-	// echo json_decode( $response );
+	echo json_encode( $return_arr );
 	die();
 
 }
