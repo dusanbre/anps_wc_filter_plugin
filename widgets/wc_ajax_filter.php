@@ -147,11 +147,12 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
     <?php
 			$attr_variations                          = array();
 			$attr_variations[ $attr->attribute_name ] = get_terms( 'pa_' . $attr->attribute_name );
+
 			?>
     <div class="sbw_sidebar-widget__menu"
         style="<?php echo $anps_wc_filter_attr ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
         <h1 class="sbw_sidebar-widget__menu-heading">
-            Color
+            <?php echo esc_html__( $attr->attribute_label, 'anps_wc_filter' ); ?>
         </h1>
 
         <div class="sbw_sidebar-widget__menu-group-1">
