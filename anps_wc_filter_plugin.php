@@ -91,6 +91,16 @@ function anps_filter_products_ajax_recive() {
 		);
 	}
 
+	// on sale meta add
+	if ( ! empty( $onsale ) ) {
+				$meta_query[] = array(
+					'key'     => '_sale_price',
+					'value'   => 0,
+					'compare' => '>',
+					'type'    => 'numeric',
+				);
+	}
+
 	$args = array(
 		'post_type'      => 'product',
 		'posts_per_page' => -1,

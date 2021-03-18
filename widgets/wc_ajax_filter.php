@@ -33,6 +33,22 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		$min_price = floor( $price_range->min_price / 10 ) * 10;
 		$max_price = ceil( $price_range->max_price / 10 ) * 10;
 
+		$get_cat       = isset( $_GET['product_cat'] ) ? explode( ',', $_GET['product_cat'] ) : '';
+		$get_min_price = isset( $_GET['min_price'] ) ? $_GET['min_price'] : $min_price;
+		$get_max_price = isset( $_GET['max_price'] ) ? $_GET['max_price'] : $max_price;
+
+		$get_attr_array = array();
+		$merged_attr    = array();
+
+		foreach ( $_GET as $key => $item ) {
+			if ( strpos( $key, 'filter_' ) !== false ) {
+				array_push( $get_attr_array, explode( ',', $item ) );
+			}
+		}
+		foreach ( $get_attr_array as $a ) {
+			$merged_attr = array_merge( $merged_attr, $a );
+		}
+
 		?>
 
 
@@ -53,10 +69,17 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
                 <?php foreach ( $all_cat as $cat ) : ?>
                 <?php
 					if ( $cat->parent == 0 ) :
+						if ( $get_cat !== '' ) {
+							$paren_checked = '';
+							if ( in_array( $cat->slug, $get_cat ) ) {
+								$paren_checked = ' checked';
+							}
+						}
 						?>
                 <li>
                     <label><input type="checkbox" id="<?php echo esc_attr( $cat->taxonomy ); ?>"
-                            value="<?php echo esc_attr( $cat->slug ); ?>" /><?php echo esc_html__( $cat->name, 'anps_wc_filter' ); ?>
+                            value="<?php echo esc_attr( $cat->slug ); ?>"
+                            <?php echo $paren_checked; ?> /><?php echo esc_html__( $cat->name, 'anps_wc_filter' ); ?>
                     </label><span><?php echo esc_html__( $cat->count, 'anps_wc_filter' ); ?></span>
                 </li>
                 <?php
@@ -68,10 +91,17 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 							)
 						);
 						foreach ( $sub as $sc ) :
+							if ( $get_cat !== '' ) {
+								$child_checked = '';
+								if ( in_array( $sc->slug, $get_cat ) ) {
+									$child_checked = ' checked';
+								}
+							}
 							?>
                 <li class="<?php echo esc_attr( 'child' ); ?>">
                     <label><input type="checkbox" id="<?php echo esc_attr( $sc->taxonomy ); ?>"
-                            value="<?php echo esc_attr( $sc->slug ); ?>" /><?php echo esc_html__( $sc->name, 'anps_wc_filter' ); ?>
+                            value="<?php echo esc_attr( $sc->slug ); ?>"
+                            <?php echo $child_checked; ?> /><?php echo esc_html__( $sc->name, 'anps_wc_filter' ); ?>
                     </label><span><?php echo esc_html__( $sc->count, 'anps_wc_filter' ); ?></span>
                 </li>
                 <?php endforeach; ?>
@@ -97,14 +127,18 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         <h3>Price</h3>
         <div class="stw-multi-range-slider">
             <p id="range-values">
-                <input type="text" id="amount_min" value="<?php echo $min_price; ?>" style="display:none;" />
-                <input type="text" id="amount_max" value="<?php echo $max_price; ?>" style="display:none;" />
+                <input type="text" id="amount_min" value="<?php echo esc_attr( $min_price ); ?>"
+                    style="display:none;" />
+                <input type="text" id="amount_max" value="<?php echo esc_attr( $max_price ); ?>"
+                    style="display:none;" />
             </p>
             <!-- Slider element || empty div -->
             <div class="sbw_sidebar-widget__price-slider" id="anps-price-range-slider"></div>
             <div class="value">
-                <span class="value-left">Min: <?php echo $min_price; ?></span>
-                <span class="value-right">Max: <?php echo $max_price; ?></span>
+                <span class="value-left" id="<?php echo esc_attr( $get_min_price ); ?>">Min:
+                    <?php echo $get_min_price; ?></span>
+                <span class="value-right" id="<?php echo esc_attr( $get_max_price ); ?>">Max:
+                    <?php echo $get_max_price; ?></span>
             </div>
         </div>
     </div>
@@ -126,21 +160,38 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 
                 <?php if ( $key == 'color' ) : ?>
                 <?php
+
 						foreach ( $item as $c ) :
 							$item_color = get_term_meta( $c->term_id, 'anps_hex_color_attr', true );
+							if ( $merged_attr !== '' ) {
+								$color_checked = '';
+								if ( in_array( $c->slug, $merged_attr ) ) {
+									$color_checked = ' checked';
+								}
+							}
 							?>
                 <li data-attr="<?php echo esc_attr( $key ); ?>">
                     <label><input type="checkbox" id="<?php echo esc_attr( $key ); ?>"
-                            value="<?php echo esc_attr( $c->slug ); ?>" class="color_inp" /><span class="color"
+                            value="<?php echo esc_attr( $c->slug ); ?>" class="color_inp"
+                            <?php echo $color_checked; ?> /><span class="color"
                             style="background-color:<?php echo esc_attr( $item_color ); ?>"></span><?php echo esc_html__( $c->name, 'anps_wc_filter' ); ?></label><span
                         class="num"><?php echo $c->count; ?></span>
                 </li>
                 <?php endforeach; ?>
                 <?php else : ?>
-                <?php foreach ( $item as $o ) : ?>
+                <?php
+					foreach ( $item as $o ) :
+						if ( $merged_attr !== '' ) {
+							$attr_checked = '';
+							if ( in_array( $o->slug, $merged_attr ) ) {
+								$attr_checked = ' checked';
+							}
+						}
+						?>
                 <li data-attr="<?php echo esc_attr( $key ); ?>">
                     <label><input type="checkbox" id="<?php echo esc_attr( $key ); ?>"
-                            value="<?php echo esc_attr( $o->slug ); ?>" /><span><?php echo esc_html__( $o->name, 'anps_wc_filter' ); ?></span></label><span
+                            value="<?php echo esc_attr( $o->slug ); ?>"
+                            <?php echo $attr_checked; ?> /><span><?php echo esc_html__( $o->name, 'anps_wc_filter' ); ?></span></label><span
                         class="num"><?php echo $o->count; ?></span>
                 </li>
                 <?php endforeach; ?>
@@ -150,7 +201,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
         </div>
     </div>
     <?php endforeach; ?>
-    <button class="sbw_filter-btn">Filter</button>
+    <!-- <button class="sbw_filter-btn">Filter</button> -->
 </section>
 
 <?php
