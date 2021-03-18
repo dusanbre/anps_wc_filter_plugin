@@ -69,17 +69,17 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
                 <?php foreach ( $all_cat as $cat ) : ?>
                 <?php
 					if ( $cat->parent == 0 ) :
+						$parent_checked = '';
 						if ( $get_cat !== '' ) {
-							$paren_checked = '';
 							if ( in_array( $cat->slug, $get_cat ) ) {
-								$paren_checked = ' checked';
+								$parent_checked = ' checked';
 							}
 						}
 						?>
                 <li>
                     <label><input type="checkbox" id="<?php echo esc_attr( $cat->taxonomy ); ?>"
                             value="<?php echo esc_attr( $cat->slug ); ?>"
-                            <?php echo $paren_checked; ?> /><?php echo esc_html__( $cat->name, 'anps_wc_filter' ); ?>
+                            <?php echo $parent_checked; ?> /><?php echo esc_html__( $cat->name, 'anps_wc_filter' ); ?>
                     </label><span><?php echo esc_html__( $cat->count, 'anps_wc_filter' ); ?></span>
                 </li>
                 <?php
@@ -91,8 +91,8 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 							)
 						);
 						foreach ( $sub as $sc ) :
+							$child_checked = '';
 							if ( $get_cat !== '' ) {
-								$child_checked = '';
 								if ( in_array( $sc->slug, $get_cat ) ) {
 									$child_checked = ' checked';
 								}
