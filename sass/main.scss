@@ -116,9 +116,6 @@ html {
       z-index: 1;
       height: 1rem;
       margin-right: 2rem;
-      span {
-        cursor: pointer;
-      }
     }
   }
 
@@ -249,6 +246,7 @@ html {
     border-radius: 50%;
     background-color: #f68c6e;
     border: 1px solid #f68c6e;
+    cursor: pointer;
     &.ui-state-focus {
       outline: 1px solid transparent;
     }
