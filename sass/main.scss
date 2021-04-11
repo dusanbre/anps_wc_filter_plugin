@@ -47,7 +47,7 @@ html {
       transform: scale(1);
       transform-origin: top;
       transition: all 0.3s;
-      max-height: 200px;
+      max-height: 1000px;
 
       // padding: 2.3rem 0 2rem 2.3rem;
       ul {
@@ -147,7 +147,7 @@ html {
       transform: scale(1);
       transform-origin: top;
       transition: all 0.3s;
-      max-height: 200px;
+      max-height: 1000px;
       ul {
         list-style: none;
         color: black;
@@ -451,8 +451,6 @@ html {
 //load more btn
 #anps-wc-load-more {
   border: none;
-  background: black;
-  color: white;
   padding: 5px 20px;
   border-radius: 3px;
 }
@@ -465,4 +463,44 @@ html {
       display: none;
     }
   }
+}
+
+.sbw_sidebar-widget {
+  &.filter_hide {
+    display: none;
+  }
+
+  &.filter_open {
+    overflow-y: auto;
+    #close-filter {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #000;
+      background: white;
+      border-radius: 3px;
+      color: #000;
+      position: absolute;
+      top: 60px;
+      right: 65px;
+    }
+  }
+
+  @media (max-width: 578px) {
+    display: block;
+    position: fixed;
+    background: #fff;
+    z-index: 100;
+    width: 100%;
+    left: 0;
+    padding: 100px 50px 50px 50px;
+    top: 0;
+    height: 100%;
+  }
+}
+
+#open-filter {
+  border: 1px solid #000;
+  padding: 2px 20px;
+  background-color: #fff;
+  color: #000;
 }

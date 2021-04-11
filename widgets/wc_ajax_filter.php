@@ -7,7 +7,7 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'Anps_WC_Ajax_Filter_Widget',
-			__( 'Anpstheme WC Ajax Filter', 'anps_wc_filter' ),
+			__( 'Anpsthemes WC Ajax Filter', 'anps_wc_filter' ),
 			array( 'description' => __( 'Widget for filtering products', 'anps_wc_filter' ) )
 		);
 	}
@@ -48,26 +48,24 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		foreach ( $get_attr_array as $a ) {
 			$merged_attr = array_merge( $merged_attr, $a );
 		}
-
 		?>
 
 
-<!-- provera -->
+
 <section class="sbw_sidebar-widget">
+	<div class="sbw_sidebar-widget__filter">
+		<h3 class="sbw_sidebar-widget__filter-heading"><?php echo esc_html__( 'Filter', 'anps_wc_filter' ); ?></h3>
+	</div>
 
-    <div class="sbw_sidebar-widget__filter">
-        <h3 class="sbw_sidebar-widget__filter-heading"><?php echo esc_html__( 'Filter', 'anps_wc_filter' ); ?></h3>
-    </div>
-
-    <div class="sbw_sidebar-widget__category"
-        style="<?php echo $anps_wc_filter_cat ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
-        <h1 class="sbw_sidebar-widget__category-heading">
-            <?php echo esc_html__( 'Category', 'anps_wc_filter' ); ?>
-        </h1>
-        <div class="sbw_sidebar-widget__category-group-1">
-            <ul>
-                <?php foreach ( $all_cat as $cat ) : ?>
-                <?php
+	<div class="sbw_sidebar-widget__category"
+		style="<?php echo $anps_wc_filter_cat ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
+		<h1 class="sbw_sidebar-widget__category-heading">
+			<?php echo esc_html__( 'Category', 'anps_wc_filter' ); ?>
+		</h1>
+		<div class="sbw_sidebar-widget__category-group-1">
+			<ul>
+				<?php foreach ( $all_cat as $cat ) : ?>
+					<?php
 					if ( $cat->parent == 0 ) :
 						$parent_checked = '';
 						if ( $get_cat !== '' ) {
@@ -76,13 +74,13 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 							}
 						}
 						?>
-                <li>
-                    <label><input type="checkbox" id="<?php echo esc_attr( $cat->taxonomy ); ?>"
-                            value="<?php echo esc_attr( $cat->slug ); ?>"
-                            <?php echo $parent_checked; ?> /><?php echo esc_html__( $cat->name, 'anps_wc_filter' ); ?>
-                    </label><span><?php echo esc_html__( $cat->count, 'anps_wc_filter' ); ?></span>
-                </li>
-                <?php
+				<li>
+					<label><input type="checkbox" id="<?php echo esc_attr( $cat->taxonomy ); ?>"
+							value="<?php echo esc_attr( $cat->slug ); ?>"
+							<?php echo $parent_checked; ?> /><span><?php echo esc_html__( $cat->name, 'anps_wc_filter' ); ?></span>
+					</label><span><?php echo esc_html__( $cat->count, 'anps_wc_filter' ); ?></span>
+				</li>
+						<?php
 						$sub = get_terms(
 							'product_cat',
 							array(
@@ -98,69 +96,69 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 								}
 							}
 							?>
-                <li class="<?php echo esc_attr( 'child' ); ?>">
-                    <label><input type="checkbox" id="<?php echo esc_attr( $sc->taxonomy ); ?>"
-                            value="<?php echo esc_attr( $sc->slug ); ?>"
-                            <?php echo $child_checked; ?> /><?php echo esc_html__( $sc->name, 'anps_wc_filter' ); ?>
-                    </label><span><?php echo esc_html__( $sc->count, 'anps_wc_filter' ); ?></span>
-                </li>
-                <?php endforeach; ?>
-                <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <div class="sbw_sidebar-widget__category-group-2"
-            style="<?php echo $anps_wc_filter_onsale ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
-            <ul>
-                <?php if ( wc_get_product_ids_on_sale() ) : ?>
-                <li>
-                    <label><?php echo esc_html__( 'Onsale', 'anps_wc_filter' ); ?><input type="checkbox" id="on_sale"
-                            value="onsale" /></label>
-                </li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </div>
+				<li class="<?php echo esc_attr( 'child' ); ?>">
+					<label><input type="checkbox" id="<?php echo esc_attr( $sc->taxonomy ); ?>"
+							value="<?php echo esc_attr( $sc->slug ); ?>"
+							<?php echo $child_checked; ?> /><?php echo esc_html__( $sc->name, 'anps_wc_filter' ); ?>
+					</label><span><?php echo esc_html__( $sc->count, 'anps_wc_filter' ); ?></span>
+				</li>
+						<?php endforeach; ?>
+				<?php endif; ?>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+		<div class="sbw_sidebar-widget__category-group-2"
+			style="<?php echo $anps_wc_filter_onsale ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
+			<ul>
+				<?php if ( wc_get_product_ids_on_sale() ) : ?>
+				<li>
+					<label><?php echo esc_html__( 'Onsale', 'anps_wc_filter' ); ?><input type="checkbox" id="on_sale"
+							value="onsale" /></label>
+				</li>
+				<?php endif; ?>
+			</ul>
+		</div>
+	</div>
 
-    <div class="sbw_sidebar-widget__price"
-        style="<?php echo $anps_wc_filter_price ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
-        <h3>Price</h3>
-        <div class="stw-multi-range-slider">
-            <p id="range-values">
-                <input type="text" id="amount_min" value="<?php echo esc_attr( $min_price ); ?>"
-                    style="display:none;" />
-                <input type="text" id="amount_max" value="<?php echo esc_attr( $max_price ); ?>"
-                    style="display:none;" />
-            </p>
-            <!-- Slider element || empty div -->
-            <div class="sbw_sidebar-widget__price-slider" id="anps-price-range-slider"></div>
-            <div class="value">
-                <span class="value-left" id="<?php echo esc_attr( $get_min_price ); ?>">Min:
-                    <?php echo $get_min_price; ?></span>
-                <span class="value-right" id="<?php echo esc_attr( $get_max_price ); ?>">Max:
-                    <?php echo $get_max_price; ?></span>
-            </div>
-        </div>
-    </div>
+	<div class="sbw_sidebar-widget__price"
+		style="<?php echo $anps_wc_filter_price ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
+		<h3><?php echo esc_html__( 'Price', 'anps_wc_filter' ); ?></h3>
+		<div class="stw-multi-range-slider">
+			<p id="range-values">
+				<input type="text" id="amount_min" value="<?php echo esc_attr( $min_price ); ?>"
+					style="display:none;" />
+				<input type="text" id="amount_max" value="<?php echo esc_attr( $max_price ); ?>"
+					style="display:none;" />
+			</p>
+			<!-- Slider element || empty div -->
+			<div class="sbw_sidebar-widget__price-slider" id="anps-price-range-slider"></div>
+			<div class="value">
+				<span class="value-left" id="<?php echo esc_attr( $get_min_price ); ?>">Min:
+					<?php echo $get_min_price; ?></span>
+				<span class="value-right" id="<?php echo esc_attr( $get_max_price ); ?>">Max:
+					<?php echo $get_max_price; ?></span>
+			</div>
+		</div>
+	</div>
 
-    <?php foreach ( $get_all_attr as $attr ) : ?>
-    <?php
+		<?php foreach ( $get_all_attr as $attr ) : ?>
+			<?php
 			$attr_variations                          = array();
 			$attr_variations[ $attr->attribute_name ] = get_terms( 'pa_' . $attr->attribute_name );
 
 			?>
-    <div class="sbw_sidebar-widget__menu"
-        style="<?php echo $anps_wc_filter_attr ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
-        <h1 class="sbw_sidebar-widget__menu-heading">
-            <?php echo esc_html__( $attr->attribute_label, 'anps_wc_filter' ); ?>
-        </h1>
+	<div class="sbw_sidebar-widget__menu"
+		style="<?php echo $anps_wc_filter_attr ? esc_attr( 'display:block;' ) : esc_attr( 'display:none;' ); ?>">
+		<h1 class="sbw_sidebar-widget__menu-heading">
+			<?php echo esc_html__( $attr->attribute_label, 'anps_wc_filter' ); ?>
+		</h1>
 
-        <div class="sbw_sidebar-widget__menu-group-1">
-            <ul>
-                <?php foreach ( $attr_variations as $key => $item ) : ?>
+		<div class="sbw_sidebar-widget__menu-group-1">
+			<ul>
+				<?php foreach ( $attr_variations as $key => $item ) : ?>
 
-                <?php if ( $key == 'color' ) : ?>
-                <?php
+					<?php if ( $key == 'color' ) : ?>
+						<?php
 
 						foreach ( $item as $c ) :
 							$item_color = get_term_meta( $c->term_id, 'anps_hex_color_attr', true );
@@ -171,16 +169,16 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 								}
 							}
 							?>
-                <li data-attr="<?php echo esc_attr( $key ); ?>">
-                    <label><input type="checkbox" id="<?php echo esc_attr( $key ); ?>"
-                            value="<?php echo esc_attr( $c->slug ); ?>" class="color_inp"
-                            <?php echo $color_checked; ?> /><span class="color"
-                            style="background-color:<?php echo esc_attr( $item_color ); ?>"></span><?php echo esc_html__( $c->name, 'anps_wc_filter' ); ?></label><span
-                        class="num"><?php echo $c->count; ?></span>
-                </li>
-                <?php endforeach; ?>
-                <?php else : ?>
-                <?php
+				<li data-attr="<?php echo esc_attr( $key ); ?>">
+					<label><input type="checkbox" id="<?php echo esc_attr( $key ); ?>"
+							value="<?php echo esc_attr( $c->slug ); ?>" class="color_inp"
+							<?php echo $color_checked; ?> /><span class="color"
+							style="background-color:<?php echo esc_attr( $item_color ); ?>"></span><?php echo esc_html__( $c->name, 'anps_wc_filter' ); ?></label><span
+						class="num"><?php echo $c->count; ?></span>
+				</li>
+				<?php endforeach; ?>
+				<?php else : ?>
+					<?php
 					foreach ( $item as $o ) :
 						if ( $merged_attr !== '' ) {
 							$attr_checked = '';
@@ -189,23 +187,22 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 							}
 						}
 						?>
-                <li data-attr="<?php echo esc_attr( $key ); ?>">
-                    <label><input type="checkbox" id="<?php echo esc_attr( $key ); ?>"
-                            value="<?php echo esc_attr( $o->slug ); ?>"
-                            <?php echo $attr_checked; ?> /><span><?php echo esc_html__( $o->name, 'anps_wc_filter' ); ?></span></label><span
-                        class="num"><?php echo $o->count; ?></span>
-                </li>
-                <?php endforeach; ?>
-                <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    </div>
-    <?php endforeach; ?>
-    <!-- <button class="sbw_filter-btn">Filter</button> -->
+				<li data-attr="<?php echo esc_attr( $key ); ?>">
+					<label><input type="checkbox" id="<?php echo esc_attr( $key ); ?>"
+							value="<?php echo esc_attr( $o->slug ); ?>"
+							<?php echo $attr_checked; ?> /><span><?php echo esc_html__( $o->name, 'anps_wc_filter' ); ?></span></label><span
+						class="num"><?php echo $o->count; ?></span>
+				</li>
+				<?php endforeach; ?>
+				<?php endif; ?>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	<?php endforeach; ?>
 </section>
 
-<?php
+		<?php
 	}
 
 		// Widget Backend
@@ -219,39 +216,39 @@ class Anps_WC_Ajax_Filter_Widget extends WP_Widget {
 		// Widget admin form
 		?>
 <p>
-    <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Widget Title:' ); ?></label>
-    <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
-        name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Widget Title:' ); ?></label>
+	<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
+		name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 </p>
 <p>
-    <label
-        for="<?php echo $this->get_field_id( 'anps_wc_filter_cat' ); ?>"><?php echo esc_html__( 'Filter By Category:', 'anps_wc_filter' ); ?></label>
-    <input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_cat' ); ?>"
-        id="<?php echo $this->get_field_id( 'anps_wc_filter_cat' ); ?>" value="1"
-        <?php echo $anps_wc_filter_cat == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
+	<label
+		for="<?php echo $this->get_field_id( 'anps_wc_filter_cat' ); ?>"><?php echo esc_html__( 'Filter By Category:', 'anps_wc_filter' ); ?></label>
+	<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_cat' ); ?>"
+		id="<?php echo $this->get_field_id( 'anps_wc_filter_cat' ); ?>" value="1"
+		<?php echo $anps_wc_filter_cat == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
 </p>
 <p>
-    <label
-        for="<?php echo $this->get_field_id( 'anps_wc_filter_attr' ); ?>"><?php echo esc_html__( 'Filter By Attributes:', 'anps_wc_filter' ); ?></label>
-    <input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_attr' ); ?>"
-        id="<?php echo $this->get_field_id( 'anps_wc_filter_attr' ); ?>" value="1"
-        <?php echo $anps_wc_filter_attr == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
+	<label
+		for="<?php echo $this->get_field_id( 'anps_wc_filter_attr' ); ?>"><?php echo esc_html__( 'Filter By Attributes:', 'anps_wc_filter' ); ?></label>
+	<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_attr' ); ?>"
+		id="<?php echo $this->get_field_id( 'anps_wc_filter_attr' ); ?>" value="1"
+		<?php echo $anps_wc_filter_attr == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
 </p>
 <p>
-    <label
-        for="<?php echo $this->get_field_id( 'anps_wc_filter_onsale' ); ?>"><?php echo esc_html__( 'Filter Product Onsale:', 'anps_wc_filter' ); ?></label>
-    <input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_onsale' ); ?>"
-        id="<?php echo $this->get_field_id( 'anps_wc_filter_onsale' ); ?>" value="1"
-        <?php echo $anps_wc_filter_onsale == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
+	<label
+		for="<?php echo $this->get_field_id( 'anps_wc_filter_onsale' ); ?>"><?php echo esc_html__( 'Filter Product Onsale:', 'anps_wc_filter' ); ?></label>
+	<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_onsale' ); ?>"
+		id="<?php echo $this->get_field_id( 'anps_wc_filter_onsale' ); ?>" value="1"
+		<?php echo $anps_wc_filter_onsale == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
 </p>
 <p>
-    <label
-        for="<?php echo $this->get_field_id( 'anps_wc_filter_price' ); ?>"><?php echo esc_html__( 'Filter By Price:', 'anps_wc_filter' ); ?></label>
-    <input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_price' ); ?>"
-        id="<?php echo $this->get_field_id( 'anps_wc_filter_price' ); ?>" value="1"
-        <?php echo $anps_wc_filter_price == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
+	<label
+		for="<?php echo $this->get_field_id( 'anps_wc_filter_price' ); ?>"><?php echo esc_html__( 'Filter By Price:', 'anps_wc_filter' ); ?></label>
+	<input class="widefat" type="checkbox" name="<?php echo $this->get_field_name( 'anps_wc_filter_price' ); ?>"
+		id="<?php echo $this->get_field_id( 'anps_wc_filter_price' ); ?>" value="1"
+		<?php echo $anps_wc_filter_price == '1' ? esc_attr( 'checked' ) : ''; ?> style="float:right;">
 </p>
-<?php
+		<?php
 	}
 
 		// Updating widget replacing old instances with new

@@ -165,7 +165,35 @@ jQuery(function ($) {
         $(this).removeClass('is-ajax-hidden')
       }
     })
+    if ($('.products li.is-ajax-hidden').length < 1) {
+      $('#anps-wc-load-more').hide()
+    } else {
+      $('#anps-wc-load-more').show()
+    }
+
   })
 
+  const shopFilter = $('.sbw_sidebar-widget')
+  if (shopFilter.length > 0) {
+    if (window.outerWidth < 576) {
+      shopFilter.addClass('filter_hide')
+      $('.sidebar').append('<button id="open-filter">FILTER</button>')
+      shopFilter.append('<button id="close-filter">X</button>')
+    }
+  }
+
+  $('body').on('click', '#open-filter', function () {
+    shopFilter.fadeIn('fast')
+    shopFilter.removeClass('filter_hide')
+    shopFilter.addClass('filter_open')
+    $('header').fadeOut('fast')
+  })
+
+  $('body').on('click', '#close-filter', function () {
+    shopFilter.fadeOut('fast')
+    shopFilter.addClass('filter_hide')
+    shopFilter.removeClass('filter_open')
+    $('header').fadeIn('fast')
+  })
 
 });
