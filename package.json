@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch:sass": "sass --watch sass/main.scss css/main.css",
-    "compile:sass": "sass sass/main.scss css/style.comp.css",
+    "compile:sass": "sass sass/main.scss css/main.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/main.css -o css/main.prefix.css",
     "compress:css": "sass css/main.prefix.css css/main.css --style compressed",
     "build:css": "npm-run-all compile:sass prefix:css compress:css"
